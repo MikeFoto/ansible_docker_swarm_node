@@ -1,4 +1,5 @@
-# Docker Swarm node setup as a worker/manager (not Leader )
+# Docker Swarm node setup 
+As a worker/manager (not Leader )
 
 # License
 
