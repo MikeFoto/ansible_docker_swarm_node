@@ -2,18 +2,22 @@
   shell:
     docker swarm join-token {{ swarm_role }} |
     grep token  |
-    sed -e "s/    --token //"  -e "s/\\\\$//g"
+    sed -e "s/^.*token //"  # -e "s/ .*$//"
   register:     swarm_token
   delegate_to:  "{{ swarm_manager_inventory_name }}"
   changed_when: False
 
+- name: debug
+  debug:
+    msg:  "token: {{ swarm_token}} role: {{ swarm_role }}"
 #
 # TODO: NO hardcoded port
 - name: Join Swarm
   shell:
     docker swarm join
       --token {{ swarm_token.stdout }}
-      {{ swarm_manager_ip }}:2377
   register:      swarm_result
   changed_when:  False
   ignore_errors: True
+
+      # {{ swarm_manager_ip }}:2377
