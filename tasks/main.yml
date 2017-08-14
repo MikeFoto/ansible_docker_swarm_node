@@ -7,11 +7,6 @@
   delegate_to:  "{{ swarm_manager_inventory_name }}"
   changed_when: False
 
-- name: debug
-  debug:
-    msg:  "token: {{ swarm_token}} role: {{ swarm_role }}"
-#
-# TODO: NO hardcoded port
 - name: Join Swarm
   shell:
     docker swarm join
@@ -19,5 +14,3 @@
   register:      swarm_result
   changed_when:  False
   ignore_errors: True
-
-      # {{ swarm_manager_ip }}:2377
