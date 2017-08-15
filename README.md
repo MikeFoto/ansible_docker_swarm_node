@@ -1,5 +1,5 @@
-# Docker Swarm node setup 
-As a worker/manager (not Leader )
+# Docker Swarm node setup
+Set one node as a swarn worker or manager (not Leader )
 
 # License
 
