@@ -1,3 +1,11 @@
+
+- name: Check if node is already part of swarm
+  shell:
+    docker node ls --filter  name={{ ansible_hostname }}  | grep Ready | wc -l
+  register:  swarm_members
+  delegate_to:  "{{ swarm_manager_inventory_name }}"
+  changed_when: False
+
 - name: Get Token from manager
   shell:
     docker swarm join-token {{ swarm_role }} |
@@ -6,6 +14,8 @@
   register:     swarm_token
   delegate_to:  "{{ swarm_manager_inventory_name }}"
   changed_when: False
+  when:
+    swarm_members.stdout_lines[0] != "1"
 
 - name: Join Swarm
   shell:
@@ -13,4 +23,6 @@
       --token {{ swarm_token.stdout }}
   register:      swarm_result
   changed_when:  False
-  ignore_errors: True
+  # ignore_errors: True
+  when:
+    swarm_members.stdout_lines[0] != "1"
