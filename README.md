@@ -3,7 +3,7 @@ Set one node as a swarn worker or manager (not Leader )
 
 # License
 
-MIT
+GNU GPLv3 
 
 # Author Information
 
